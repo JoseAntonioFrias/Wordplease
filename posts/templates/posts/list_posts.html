@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %} Posts {% endblock %}
+
+{% block content %}
+	<div class="container-fluid" style="padding-top: 90px;">
+		{% include 'includes/messages.html' %}
+
+		<p><h4 align="Center" style="color:red">Posts publicados en el blog: {{ blog_title }}</h4> </p>
+
+		{% if object_list %}
+			<form class="form-inline justify-content-center" method="GET" action="{% url 'list_posts' user.username blog_id %}">
+				<label class="my -mr-2" for="inlineFormCustomSelectPref">Categorías:&nbsp;</label>
+				<select class="form-control my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="category">
+					<option value="0" {% if category_selected|stringformat:"s" == 0|stringformat:"s" %}selected{% endif %}>Todas</option>
+						{% for category in categories %}
+							<option value="{{ category.id }}" {% if category.id|stringformat:"s" == category_selected|stringformat:"s" %}selected{% endif %}>
+								{{ category.name}}
+							</option>
+						{% endfor %}
+				</select>
+				<button type="submit" class="btn btn-primary btn-ld">Buscar</button>
+				<input id="btnSearch" name="btnSearch" type="hidden" value="1">
+			</form>
+
+			<div class="table-responsive">
+
+				<table class="table table-hover table-condensed col-xs-12 col-sm-12 col-md-12 col-lg-12 small bgcolor=#a9a9a9">
+					<thead class="thead-dark">
+						<tr>
+							<th style='vertical-align:middle' class='text-center'>#</th>
+							<th style='vertical-align:middle' class='text-center'>Autor</th>
+							<th style='vertical-align:middle' class='text-center'>Título</th>
+							<th style='vertical-align:middle' class='text-center'>Introducción</th>
+							<th style='vertical-align:middle' class='text-center'>Fecha de publicación</th>
+							<th style='vertical-align:middle' class='text-center'>Categoría/s</th>
+							<th style='vertical-align:middle' class='text-center'></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for post in object_list %}
+							<tr bgcolor="white">
+								<td style='vertical-align:middle;font-weight: bold' class='text-center' nowrap>
+									{% include 'includes/outstanding_media_file.html' %}
+								</td>
+								<td style='vertical-align:middle' class='text-center'>{{ post.owner.username }}</td>
+								<td style='vertical-align:middle' class='text-center'>{{ post.title }}</td>
+								<td style='vertical-align:middle' class='text-center'>{{ post.summary }}</td>
+								<td style='vertical-align:middle;' class='text-center'>{{ post.pub_date|date:"d/m/Y H:i" }}</td>
+								<td style='vertical-align:middle;' class='text-center'>
+									{% include 'includes/categories_list.html' %}
+								</td>
+								<td style='vertical-align:middle' class='text-right' nowrap>
+									<a class="btn btn-primary btn-ld" href="{% url 'detail_post' post.id %}">Detalle</a>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+
+				{% include 'includes/pagination.html' %}
+			</div>
+
+		{% elif not object_list and btn_search_clicked == 0 %}
+			<h4 align="center">No hay posts publicados en el blog</h4>
+		{% elif not object_list and btn_search_clicked == 1%}
+			<h4 align="center">No hay posts publicados en el blog para la categoría {{ name_category }}</h4>
+		{% endif %}
+
+		 <div class="row">
+    		<div class="col text-left">
+      			<a href="javascript:window.history.back()" class="btn btn-danger">Volver</a>
+			</div>
+		 </div>
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} Nuevo Blog {% endblock %}
+
+{% block content %}
+	<div class="container" style="padding-top: 90px;">
+		{% include 'includes/messages.html' %}
+
+        <p><h4 align="Center" style="color:red">Formulario de alta de un blog:</h4> </p>
+
+        <form class = "form-horizontal" novalidate enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+
+            <div class="form-grop row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="form-group">
+                        <label for= "{{form.title.name}}" class="font-weight-bold col-md-2">{{form.title.label}}</label>
+                        <div class="col-md-7">
+                        {{form.title}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                            <label for="{{form.description.name}}" class="font-weight-bold col-md-2">{{form.description.label}}</label>
+                        <div class="col-md-7">
+                            {{form.description}}
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-ld " type="submit">Guardar</button>
+                            <a href="javascript:window.history.back()" class = "btn btn-danger btn-ld" onclick=history.back>Volver</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+{% endblock %}

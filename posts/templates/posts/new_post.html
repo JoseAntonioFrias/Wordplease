@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %} Nuevo Post {% endblock %}
+
+{% block content %}
+
+    <div class="container" align="center" style="padding-top: 90px;">
+        {% include 'includes/messages.html' %}
+
+        <p><h4 class= "text-danger text-center">Formulario de alta de un post:</h4> </p>
+
+        <form class = "form-horizontal" novalidate enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+
+            <div class="form-group row" align="left">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="form-group">
+                        <label for=" {{form.blog.name}} " class="font-weight-bold col-md-2">{{form.blog.label}}</label>
+                        <div class="col-md-7">
+                            {{form.blog}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{form.title.name}}" class="font-weight-bold col-md-2">{{form.title.label}}</label>
+                        <div class="col-md-7">
+                            {{form.title}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{form.summary.name}}" class="font-weight-bold col-md-2">{{form.summary.label}}</label>
+                        <div class="col-md-7">
+                            {{form.summary}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{form.body.name}}" class="font-weight-bold col-md-2">{{form.body.label}}</label>
+                        <div class="col-md-7">
+                            {{form.body}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{form.image.name}}"class="font-weight-bold col-md-5">{{form.image.label}}</label>
+                        <div class="col-md-7">
+                            {{form.image}}
+                        </div>
+                    </div>
+                    <!--
+                     <div class="form-group">
+                        <label for="{{form.video.name}}"class="font-weight-bold col-md-5">{{form.video.label}}</label>
+                        <div class="col-md-7">
+                            {{form.video}}
+                        </div>
+                    </div>
+                    -->
+                    <div class="form-group">
+                            <label for="{{form.pub_date.name}}"class="font-weight-bold col-md-5">{{form.pub_date.label}}</label>
+                        <div class="col-md-7">
+                            {{form.pub_date}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{form.categories.name}}" class="font-weight-bold form-check-label col-md-2">{{form.categories.label}}</label>
+                        <div class="col-md-7">
+                            {{form.categories}}
+                         </div>
+                    </div>
+
+                    <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-ld" type="submit">Guardar</button>
+                            <a href="javascript:window.history.back()" class = "btn btn-danger btn-ld" onclick=history.back>Volver</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+{% endblock %}

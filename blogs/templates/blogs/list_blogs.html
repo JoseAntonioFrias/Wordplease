@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %} Blogs {% endblock %}
+
+{% block content %}
+	<div class="container-fluid" style="padding-top: 90px;">
+		{% include 'includes/messages.html' %}
+
+		<p><h4 align="Center" style="color:red">Blogs creados</h4> </p>
+
+		{% if object_list %}
+			<div class="table-responsive">
+				<table class="table table-hover table-condensed col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 small bgcolor=#a9a9a9">
+					<thead class="thead-dark">
+						<tr>
+							<th style='vertical-align:middle' class='text-center'>Autor </th>
+							<th style='vertical-align:middle' class='text-center'>Título</th>
+							<th style='vertical-align:middle' class='text-center'>Descripción</th>
+							<th style='vertical-align:middle' class='text-center'>Fecha de creación</th>
+							<th style='vertical-align:middle' class='text-center'></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for blog in object_list %}
+							<tr bgcolor="white">
+								<td style='vertical-align:middle' class='text-center'>{{ blog.owner }} </td>
+								<td style='vertical-align:middle' class='text-center'>{{ blog.title }}</td>
+								<td style='vertical-align:middle' class='text-center'>{{ blog.description }}</td>
+								<td style='vertical-align:middle;' class='text-center'>{{ blog.create_date|date:"d/m/Y" }}</td>
+								<td style='vertical-align:middle' class='text-right' nowrap>
+									{% if user.is_authenticated %}
+										<a class="btn btn-primary btn-ld" href="{{ user.username }}/{{blog.id}}">Ver Posts</a>
+										<a class="btn btn-primary btn-xs" href="{% url 'new_post' %}">añadir Post </a>
+									{% else %}
+										<a class="btn btn-primary btn-ld" href="{{ blog.owner }}/{{blog.id}}">Ver Posts</a>
+									{% endif %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% else %}
+			<h4 align="center">No hay blogs creados.</h4>
+		{% endif %}
+
+	</div>
+
+{% endblock%}

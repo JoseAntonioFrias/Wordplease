@@ -1,0 +1,8 @@
+{% for category in post.categories.all %}
+    {% if not forloop.last and not forloop.first %}
+        ,
+    {% elif forloop.last and forloop.counter != 1 %}
+        y
+    {% endif %}
+    {{ category.name }}
+{% endfor %}

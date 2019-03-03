@@ -1,0 +1,71 @@
+{% load static from staticfiles %}
+
+<html lang="es" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} Word Please{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body style="height:1000px;">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark text-light" style="background: coral;">
+        <a class="navbar-brand" href="">Word Please</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+                </li>
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Registrar</a>
+                    </li>
+                {% elif user.is_authenticated and not user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'list_blogs' %}">Blogs</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_blog' %}">Crear blog</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'new_post' %}">Crear post</a>
+                    </li>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% elif user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin">Administrador</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+            {% if user.is_authenticated %}
+                <div >¡Bienvenido {{user.username}}!</div>
+            {% else %}
+                <div>No estás logado</div>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}
+    {% endblock content %}
+
+     <script src="{% static 'js/popper.js' %}"></script>
+     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+</body>
+</html>
